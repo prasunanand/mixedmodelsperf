@@ -1,4 +1,5 @@
 library(lme4)
+library(microbenchmark)
 sleepstudy <- load("../data/sleepstudy.rda")
 str(sleepstudy)
 require(lattice)
