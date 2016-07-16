@@ -1,11 +1,8 @@
 library(lme4)
-library(microbenchmark)
-sleepstudy <- load("../data/sleepstudy.rda")
-str(sleepstudy)
-require(lattice)
-xyplot(Reaction ~ Days | Subject, sleepstudy, type = c("g","p","r"),
-       index = function(x,y) coef(lm(y ~ x))[1],
-       xlab = "Days of sleep deprivation",
-       ylab = "Average reaction time (ms)", aspect = "xy")
-(fm1 <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy))
-(fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy))
+# sleepstudy
+fm1 <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy)
+fm1ML <- refitML(fm1)
+REMLcrit(fm1)
+deviance(fm1ML)
+deviance(fm1,REML=FALSE)  ## FIXME: not working yet (NA)
+deviance(fm1,REML=TRUE)
