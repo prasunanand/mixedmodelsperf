@@ -8,3 +8,14 @@ REMLcrit(fm1)
 deviance(fm1ML)
 deviance(fm1,REML=FALSE)  ## FIXME: not working yet (NA)
 deviance(fm1,REML=TRUE)
+
+parsedFormula <- lFormula(formula = Reaction ~ Days + (Days | Subject), data = sleepstudy)
+devianceFunction <- do.call(mkLmerDevfun, parsedFormula)
+
+optimizerOutput <- optimizeLmer(devianceFunction)
+
+mkMerMod( rho = environment(devianceFunction),
+          opt = optimizerOutput,
+          reTrms = parsedFormula$reTrms,
+          fr = parsedFormula$fr
+        )
