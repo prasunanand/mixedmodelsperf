@@ -1,6 +1,8 @@
 library(lme4)
 # sleepstudy
+# formula
 fm1 <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy)
+# maximum likelihood
 fm1ML <- refitML(fm1)
 REMLcrit(fm1)
 deviance(fm1ML)
